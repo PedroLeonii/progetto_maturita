@@ -1,0 +1,71 @@
+##########BASE VARIABLES#####
+@host = 127.0.0.1
+@port = 5001
+@token = {{login.response.body.token}}
+@user_id = {{login.response.body.id}}
+@tg_token = 1726299570:AAFc_QNlpTcX4WtQjxjx81KdTiVZQDADOEg
+#############################
+
+############UTENTI###########
+# @name login
+POST http://{{host}}:{{port}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"pedro",
+    "password":"CormoranoGoffo"
+}
+
+###
+GET http://{{host}}:{{port}}/user/{{user_id}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+POST http://{{host}}:{{port}}/user HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"pedro",
+    "password": "CormoranoGoffo",
+    "email":"kiwi@gmail.com"
+}
+
+###
+PUT http://{{host}}:{{port}}/user/{{user_id}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "username":"franco"
+}
+
+###
+DELETE  http://{{host}}:{{port}}/user/{{user_id}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+#############################
+
+
+############BOT###########
+###
+GET http://{{host}}:{{port}}/bot HTTP/1.1
+
+###
+POST http://{{host}}:{{port}}/bot HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"1726299570:AAFc_QNlpTcX4WtQjxjx81KdTiVZQDADOEg"
+}
+
+###
+PUT http://{{host}}:{{port}}/bot HTTP/1.1
+Content-Type: application/json
+
+{
+    "token":"1726299570:AAFc_QNlpTcX4WtQjxjx81KdTiVZQDADOEg"
+}
+
+###
+PUT http://{{host}}:{{port}}/bot HTTP/1.1
+#############################
