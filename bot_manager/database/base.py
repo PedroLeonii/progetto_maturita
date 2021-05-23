@@ -1,9 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('URI CONNECTION')
+engine = create_engine('mysql+pymysql://root:masterkey@localhost:3306/bot_manager')
 
 Session = sessionmaker(bind=engine)
-
-Base = declarative_base()
