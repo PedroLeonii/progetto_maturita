@@ -1,8 +1,7 @@
 import telepot
 from telepot.loop import MessageLoop
 import json
-from database.funzioni import get_risposta
-from pprint import pprint
+from gen_risposte import genera_risposte
 
 class BotManager:
 
@@ -17,14 +16,21 @@ class BotManager:
         except Exception:
             return json.dumps({'ok':False, 'msg': 'Token invalid'})
         MessageLoop(self.bot, self.handlers).run_as_thread()
-        return json.dumps({'ok':True, 'msg': 'Token valid'})
+        return json.dumps({'ok': True, 'msg': 'Token valid'})
 
     def handler_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
-        content = msg['text'].split()
+        content = msg['text'].split(' ')
+        comando = content[0]
+        list_args = content[1:] if len(content) > 0 else []
 
-        if content_type == 'text':
-            self.bot.sendMessage(chat_id, 'hai inviato del testo...')
+        if content_type == 'text' and comando.startswith('/'):
+            genera_risposte(
+                comando,
+                chat_id,
+                self.bot,
+                list_args
+            )
         elif content_type == 'voice':
             self.bot.sendMessage(chat_id, 'Sono sordo muto!')
         elif content_type == 'photo':

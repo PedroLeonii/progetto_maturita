@@ -33,15 +33,29 @@ class Comandi(Base):
     id_tipo = Column(Integer, ForeignKey('tipicomando.id'))
     id_bot = Column(Integer, ForeignKey('bot.id'))
     tipo_comando = relationship('TipiComando', uselist=False)
+    help_msg = Column(String(500), nullable=False)
 
     def get_tipo(self):
         return self.tipo_comando.tipo
 
-class Testo(Base):
-    __tablename__='testo'
+class Testuali(Base):
+    __tablename__='testuali'
 
     id = Column(Integer, ForeignKey('comandi.id'), primary_key=True)
     risposta = Column(String(500), nullable=False)
+    num_argomenti = Column(Integer)
+
+    def controllo_args(self, list_args):
+        if len(list_args) == self.num_argomenti:
+            return True
+        return False
+        
+class Api(Base):
+    __tablename__='api'
+
+    id = Column(Integer, ForeignKey('comandi.id'), primary_key=True)
+    funzione = Column(String(40), nullable=False)
+
 
 
 

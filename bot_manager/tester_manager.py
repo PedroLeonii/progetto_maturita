@@ -1,5 +1,4 @@
 import socket as s
-import json
 
 server = ('localhost', 5000)
 
